@@ -42,6 +42,14 @@ export async function run(req: express.Request, res: express.Response): Promise<
         return res.send(`ERROR: You do not own this Journal!`);
     }
 
+    if (TheJournal.remixInfo[`original-journal-id`]) {
+        let RemixedJournal = await Journal.findOne({id: TheJournal.remixInfo[`original-journal-id`]}) || null;
+        if (RemixedJournal) {
+            RemixedJournal.remixInfo[`remixes`] -= 1;
+            await RemixedJournal.save();
+        }
+    }
+
     await Journal.deleteOne({id: req.params.var1});
     return res.json({
         "success": true

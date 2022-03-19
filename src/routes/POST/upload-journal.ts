@@ -74,7 +74,17 @@ export async function run(req: express.Request, res: express.Response): Promise<
         comments: [],
         isDraft: req.body.isDraft
     });
-    TheJournal.save();
+
+    if (TheJournal.remixInfo[`original-journal-id`]) {
+        let RemixedJournal = await Journal.findOne({id: TheJournal.remixInfo[`original-journal-id`]}) || null;
+        if (RemixedJournal) {
+            console.log(`is remix, incrementing`);
+            RemixedJournal.remixInfo.remixes += 1;
+            console.log(RemixedJournal.remixInfo.remixes);
+            await RemixedJournal.save();
+        }
+    }
+    await TheJournal.save();
 
     res.status(200);
 

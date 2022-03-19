@@ -10,7 +10,13 @@ let JournalSchema = new mongoose.Schema({
     topics: {type: Array, required: true, default: []},
     likes: {type: Array, required: true, default: []},
     visibility: {type: String, required: true, default: `public`}, // Public, Private, Unlisted
-    remixInfo: {type: Object, required: true, default: {"allow-remix": true, "is-remix": false, "original-journal-id": null, "remixes": 0, "remix-chain": 0}},
+    remixInfo: {
+        "allow-remix": {type: Boolean, required: true, default: true},
+        "is-remix": {type: Boolean, required: true, default: false},
+        "original-journal-id": {type: String, required: true, default: `0`},
+        "remixes": {type: Number, required: true, default: 0},
+        "remix-chain": {type: Number, required: true, default: 0}
+    },
     comments: {type: Array, required: true, default: []},
     isDraft: {type: Boolean, required: true, default: false}
 }, { collection: `journals` });

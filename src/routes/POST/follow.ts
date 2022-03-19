@@ -73,17 +73,17 @@ export async function run(req: express.Request, res: express.Response): Promise<
         await UserToFollow.save();
     }
     else if(FollowType == `topic`) {
-        if(UserInfo.followedTopics.includes(UserInfo.id)){
+        if(UserInfo.followedTopics.includes(InitialData)){
             // Remove It
             if(UserInfo.followedTopics.length <= 1) UserInfo.followedUsers = [];
             else {
-                let index = UserInfo.followedTopics.indexOf(UserInfo.id);
+                let index = UserInfo.followedTopics.indexOf(InitialData);
                 UserInfo.followedTopics.splice(index, 1);
             }
             IsNowFollowed = false;
         }
         else {
-            UserInfo.followedTopics.push(UserInfo.id);
+            UserInfo.followedTopics.push(InitialData);
             IsNowFollowed = true;
         }
     }
