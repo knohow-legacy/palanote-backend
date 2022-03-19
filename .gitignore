@@ -1,0 +1,17 @@
+# Node Modules
+/node_modules/
+
+# Compiled Typescript
+/dist/**/*.js
+/dist/**/*.map
+/dist/**/*.json
+
+# Secret File
+secret.env
+
+# Web Deployment
+.deployment
+web.config
+
+# VS Code
+.vscode/*
