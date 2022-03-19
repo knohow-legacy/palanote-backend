@@ -35,6 +35,7 @@ export async function run(req: express.Request, res: express.Response): Promise<
             followedTopics: UserInfo.followedTopics,
             followers: UserInfo.followers.length,
             comments: UserInfo.comments,
+            bio: UserInfo.bio,
             authenticated: token && UserInfo.token === token,
             isFollowing: requestUser && UserInfo.followers.includes(requestUser.id)
         });

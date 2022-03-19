@@ -50,6 +50,15 @@ config.devMode ? URI = process.env.MONGO_URI_DEV : URI = process.env.MONGO_URI_P
 
 mongoose.connect(URI).then(async () => {
     console.log(colors.green(`[MongoDB] Succesfully Connected to MongoDB Atlas!`));
+
+    // Add bios if not found
+    let users = await User.find({});
+    users.forEach(async user => {
+        if(!user.bio) user.bio = `No bio written`;
+        await user.save();
+        return;
+    });
+
     // Create dev models
     console.log(colors.yellow(`[MongoDB] Looking for default user...`));
     let DefaultUser = await User.findOne({id: `1`}) || null;
@@ -59,7 +68,8 @@ mongoose.connect(URI).then(async () => {
             username: `System`,
             token: `systemtoken1`,
             pfp: `none`,
-            id: `1`
+            id: `1`,
+            bio: `System User Account`
         });
         DefaultUser.save();
         console.log(colors.green(`[MongoDB] Default user created!`));

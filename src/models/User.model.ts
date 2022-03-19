@@ -9,7 +9,8 @@ let UserSchema = new mongoose.Schema({
     pfp: {type: String, required: true, default: `none`},
     followedTopics: {type: Array, required: true, default: []},
     followers: {type: Array, required: true, default: []},
-    comments: {type: Array, required: true, default: []}
+    comments: {type: Array, required: true, default: []},
+    bio: {type: String, required: true, default: `No bio written!`}
 }, { collection: `users` });
 
 export let User = mongoose.model(`User`, UserSchema);
