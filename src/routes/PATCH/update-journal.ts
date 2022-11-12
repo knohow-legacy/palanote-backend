@@ -39,7 +39,7 @@ export async function run(req: express.Request, res: express.Response): Promise<
     if(req.body.isDraft === undefined ||
         req.body.title === undefined ||
         req.body.topics === undefined ||
-        req.body.content === undefined ||
+        // req.body.content === undefined ||
         req.body.visibility === undefined ||
         req.body.journalID === undefined){
         return res.send(`ERROR: Bad syntax!`);
@@ -61,7 +61,7 @@ export async function run(req: express.Request, res: express.Response): Promise<
 
     TheJournal.title = req.body.title;
     TheJournal.topics = req.body.topics;
-    TheJournal.content = req.body.content;
+    // TheJournal.content = req.body.content;
     TheJournal.visibility = req.body.visibility;
     TheJournal.isDraft = req.body.isDraft;
 

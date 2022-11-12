@@ -12,6 +12,7 @@ import {config} from './config';
 import {RouteHandler} from './RouteHandler';
 import {User} from './models/User.model';
 import {Journal} from './models/Journal.model';
+import {runMediaServer} from './MediaServer';
 
 // Run DotENV
 dotenv.config({path: `secret.env`});
@@ -48,15 +49,24 @@ MainRouteHandler.LoadRoutes();
 let URI: string;
 config.devMode ? URI = process.env.MONGO_URI_DEV : URI = process.env.MONGO_URI_PROD;
 
-mongoose.connect(URI).then(async () => {
+mongoose.connect(URI, {dbName: `${config.devMode ? `post-it-server` : `postIt`}`}).then(async () => {
     console.log(colors.green(`[MongoDB] Succesfully Connected to MongoDB Atlas!`));
 
     // Add bios if not found
     let users = await User.find({});
     users.forEach(async user => {
-        if(!user.bio) user.bio = `No bio written`;
+        if(!user?.bio) user.bio = `No bio written`;
         await user.save();
         return;
+    });
+
+    // Add bookmarks and ratings
+    let journals = await Journal.find({});
+    journals.forEach(async j => {
+        if(!j?.rating) {
+            j.rating = [];
+            j.save();
+        }
     });
 
     // Create dev models
@@ -98,6 +108,8 @@ mongoose.connect(URI).then(async () => {
     console.error(colors.red(`[MongoDB] ERROR - COULDN'T CONNECT TO MONGODB - SHUTTING DOWN`));
     process.exit(1);
 });
+
+runMediaServer(`media`); // The media path
 
 // Make sure Azure finds port 8080 in PROD mode!
 let portToUse = parseInt(process.env.PORT) || 8080;

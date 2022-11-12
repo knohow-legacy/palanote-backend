@@ -12,7 +12,7 @@ import { config } from '../../config';
 
     What the API will return
     {
-        "isNowLiked": true / false
+        "isNowBookmarked": true / false
         "success": true
     }
 */
@@ -48,21 +48,21 @@ export async function run(req: express.Request, res: express.Response): Promise<
     }
 
     let isLiked = false;
-    if(JournalObj.likes.includes(UserObj.id)){
-        if(JournalObj.likes.length <= 1) JournalObj.likes = [];
+    if(JournalObj.bookmarks.includes(UserObj.id)){
+        if(JournalObj.bookmarks.length <= 1) JournalObj.bookmarks = [];
         else {
-            let index = JournalObj.likes.indexOf(UserObj.id);
-            JournalObj.likes.splice(index, 1);
+            let index = JournalObj.bookmarks.indexOf(UserObj.id);
+            JournalObj.bookmarks.splice(index, 1);
             isLiked = false;
         }
     } else {
-        JournalObj.likes.push(UserObj.id);
+        JournalObj.bookmarks.push(UserObj.id);
         isLiked = true;
     }
     await JournalObj.save();
 
     return res.json({
-        isNowLiked: isLiked,
+        isNowBookmarked: isLiked,
         success: true
     });
 }

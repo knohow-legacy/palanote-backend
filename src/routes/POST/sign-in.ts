@@ -62,7 +62,7 @@ export async function run(req: express.Request, res: express.Response): Promise<
     let user = await User.findOne({id: userid});
     if(!user){
         user = new User({
-            "username": payload[`name`],
+            "username": (<string> payload[`name`]).substring(0, 32),
             "pfp": payload[`picture`] || `none`,
             "id": userid,
             "token": resp.data.refresh_token

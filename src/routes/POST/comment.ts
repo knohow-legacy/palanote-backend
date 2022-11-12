@@ -1,7 +1,7 @@
 import express from 'express';
 import {User} from '../../models/User.model';
 import {Journal} from '../../models/Journal.model';
-import { randomString } from '../../Generator';
+import { randomString } from '../../modules/Generator';
 
 /*
     What the API is expecting:

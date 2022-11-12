@@ -24,7 +24,7 @@ export async function run(req: express.Request, res: express.Response): Promise<
     }
     else {
         res.status(200);
-        return res.json(filterJournal(JournalInfo, user.id || 0));
+        return res.json(filterJournal(JournalInfo, (user && user.id) ? user.id : 0));
     }
 }
 

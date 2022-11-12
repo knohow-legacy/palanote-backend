@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import express from 'express';
 import {User} from '../../models/User.model';
-import { Journal, filterJournal } from '../../models/Journal.model';
+import { Journal, filterJournal, getJournalAverageRating } from '../../models/Journal.model';
 
 export async function run(req: express.Request, res: express.Response): Promise<express.Response> {
     if(!req.params.var1){
@@ -71,7 +71,7 @@ export async function run(req: express.Request, res: express.Response): Promise<
             await JournalTHING.sort((a, b) => {return (<any> b).timestampCreated - (<any> a).timestampCreated;});
         }
         else if(sort == `top`){
-            await JournalTHING.sort((a, b) => {return (<any> b).likes - (<any> a).likes;});
+            await JournalTHING.sort((a, b) => {return getJournalAverageRating(b) - getJournalAverageRating(a);});
         }
         let PagOffset = parseInt(req.params.var2); // 0, 1, 2
         let pgArray = JournalTHING.slice((5 * PagOffset), (5 * (PagOffset + 1)));

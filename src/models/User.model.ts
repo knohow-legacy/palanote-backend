@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import {randomString} from '../Generator';
+import {randomString} from '../modules/Generator';
 
 let UserSchema = new mongoose.Schema({
     username: {type: String, reqiured: true, default: `Default`},

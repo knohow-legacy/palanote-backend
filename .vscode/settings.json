@@ -1,0 +1,11 @@
+{
+    "editor.codeActionsOnSave": {
+        "source.fixAll.eslint": true
+      },
+      "appService.zipIgnorePattern": [
+        "node_modules{,/**}",
+        ".vscode{,/**}"
+      ],
+      "appService.defaultWebAppToDeploy": "/subscriptions/8632f430-a8ce-4090-89ec-73c9cc65b2e7/resourceGroups/Knohow-Server-1_group/providers/Microsoft.Web/sites/knohow",
+      "appService.deploySubpath": "."
+}

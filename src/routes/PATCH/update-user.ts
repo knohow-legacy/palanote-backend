@@ -3,7 +3,9 @@ import {User} from '../../models/User.model';
 /*
     What the API is expecting:
     req.body = {
-        "bio": "new user bio (or the old one if they have not changed it at all)"
+        "bio": "new user bio (or the old one if they have not changed it at all)" | null,
+        "username": "newusername" | null,
+        "pfp": "newPFPString" | null
     }
 
     What the API will return
@@ -35,7 +37,11 @@ export async function run(req: express.Request, res: express.Response): Promise<
         return res.send(`Error: Invalid User Token - User doesn't exist!`);
     }
 
-    UserToUpdate.bio = req.body.bio;
+    // Update stuff
+    if(req.body?.bio) UserToUpdate.bio = req.body.bio;
+    if(req.body?.username) UserToUpdate.username = req.body.username;
+    if(req.body?.pfp) UserToUpdate.pfp = req.body.pfp;
+
     await UserToUpdate.save();
     return res.json({success: true});
 }

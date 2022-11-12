@@ -6,12 +6,9 @@
 /dist/**/*.map
 /dist/**/*.json
 
-# Secret File
+# Secret File - Commented out
+# secret.env
+
+# Media Server
+/uploads/
 secret.env
-
-# Web Deployment
-.deployment
-web.config
-
-# VS Code
-.vscode/*

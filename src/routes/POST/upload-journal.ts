@@ -1,7 +1,7 @@
 import express from 'express';
 import {User} from '../../models/User.model';
 import {Journal} from '../../models/Journal.model';
-import {randomString} from '../../Generator';
+import {randomString} from '../../modules/Generator';
 
 /*
     What the API is expecting:
@@ -51,7 +51,7 @@ export async function run(req: express.Request, res: express.Response): Promise<
         req.body.title === undefined ||
         req.body.topics === undefined ||
         req.body.remixInfo === undefined ||
-        req.body.content === undefined ||
+        // req.body.content === undefined ||
         req.body.visibility === undefined){
         res.status(400);
         return res.send(`ERROR: Bad syntax!`);
@@ -67,7 +67,8 @@ export async function run(req: express.Request, res: express.Response): Promise<
         title: req.body.title,
         topics: req.body.topics,
         remixInfo: req.body.remixInfo,
-        content: req.body.content,
+        pages: req.body.pages,
+        // content: req.body.content,
         authorID: JournalingUser.id,
         id: randomString(12),
         visibility: req.body.visibility,

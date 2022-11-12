@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
 import express from 'express';
 import {User} from '../../models/User.model';
-import { Journal, filterJournal } from '../../models/Journal.model';
+import { Journal, filterJournal, getJournalAverageRating } from '../../models/Journal.model';
 
 /*
     What the API is expecting:
@@ -55,7 +55,7 @@ export async function run(req: express.Request, res: express.Response): Promise<
     async function fetchJournalsByQuery(){
         let jj;
         if(req.body.remix == `false`) jj = (await Journal.find({isDraft: false, visibility: `public`, title: {$regex: regex}})).filter(a => a.remixInfo[`is-remix`] == false);
-        if(req.body.remix == `only`) jj = (await Journal.find({isDraft: false, visibility: `public`, title: {$regex: regex}})).filter(a => a.remixInfo[`is-remix`] == true);
+        else if(req.body.remix == `only`) jj = (await Journal.find({isDraft: false, visibility: `public`, title: {$regex: regex}})).filter(a => a.remixInfo[`is-remix`] == true);
         else jj = await Journal.find({isDraft: false, visibility: `public`, title: {$regex: regex}});
         return jj;
     }
@@ -74,19 +74,19 @@ export async function run(req: express.Request, res: express.Response): Promise<
 
     await Promise.all(asyncFunctions).then(async (results) => {
         responseArr = responseArr.concat(results.flat());
-
         if(req.body.sort == `top`){
-            responseArr.sort((a, b) => {return b.likes.length - a.likes.length;});
+            responseArr.sort((a, b) => {return getJournalAverageRating(b) - getJournalAverageRating(a);});
         }
         else {
             responseArr.sort((a, b) => {return b.timestampCreated - a.timestampCreated;});
         }
 
         let PagOffset = parseInt(req.body.page); // 0, 1, 2
+        responseArr = responseArr.map(x => filterJournal(x, user ? user.id : `0`));
         let finalArr = responseArr.slice((9 * PagOffset), (9 * (PagOffset + 1)));
 
         return res.json({
-            "results": finalArr.map(x => filterJournal(x, user ? user.id : `0`)),
+            "results": finalArr,
             "success": true
         });
     });
