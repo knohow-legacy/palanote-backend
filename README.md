@@ -1,8 +1,8 @@
-# Post-it Server
-This is the backend server component for Post-It, a submission for the [2022 Hackathon by The Sea](https://www.vcoe.org/Career-Education/Student-Events/Hackathon-By-The-Sea/Hackathon-By-The-Sea-Coed)
+# PalaNote Server
+This is the backend server component for PalaNote, a submission for the [2022 Hackathon by The Sea](https://www.vcoe.org/Career-Education/Student-Events/Hackathon-By-The-Sea/Hackathon-By-The-Sea-Coed) and the [2022 Congressional App Challenge](https://www.congressionalappchallenge.us/)
 
 ## Authors
-Knohow - The PostIt Team
+Knohow - The PalaNote Team
 
 ## License
 [GNU LGPL-3.0](https://tldrlegal.com/license/gnu-lesser-general-public-license-v3-(lgpl-3))
